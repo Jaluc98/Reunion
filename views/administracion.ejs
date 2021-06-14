@@ -1,0 +1,8 @@
+<!--Si el usuario es 2 renderizar la plantilla de la parte del administrador
+si no la del usuario
+-->
+<%if(usuario.tipoUsuario === 2){%>
+    <%- include ('partials/administrador') %> 
+<%}else{%>
+    <%- include ('partials/administradorUsuario') %> 
+<%}%>

@@ -1,0 +1,106 @@
+<div class="hero">
+  <h1>Encuentra o crea un grupo para compartir lo que más te gusta</h1>
+      <%if(usuario.id){%>
+        <p></p>
+      <%}else{%>
+        <a href="/crear-cuenta" class="btnHome btn-amarillo">Obtener Cuenta</a>
+      <%}%>
+</div>
+
+<div class="buscador-inicio">
+  <div class="contenedor">
+    <h2>Busca un grupo</h2>
+    <form action="/busqueda" method="GET">
+      <select name="categoria">
+        <option value="" selected>-- Todas --</option>
+        <% categorias.forEach(categoria => { %>
+        <option value="<%= categoria.id%>"><%= categoria.nombre %></option>
+        <% }); %>
+      </select>
+      <input type="text" name="titulo" placeholder="Titulo Reunion" />
+      <input type="submit" value="Buscar" class="btn btn-rosa" />
+    </form>
+  </div>
+</div>
+
+<div class="contenedor">
+  <h2>Próximas Reuniones</h2>
+  <div class="grid columnas-md-3">
+    <% if(reunion.length > 0){ %> 
+      <%reunion.forEach(reun =>{%>
+        <div class="card">
+          <%if(reun.grupo.imagen){%>
+              <%const url = `./public/uploads/grupos/${reun.grupo.imagen}`%>
+              <%if(comprobarUrl(url)){%>
+                <div class="imagen">
+                  <img src="/uploads/grupos/<%=reun.grupo.imagen%>" />
+                </div>
+              <%}else{%>
+                <div class="imagen">
+                  <img src="/img/camara3.jpg" />
+                </div>
+              <%}%>
+          <%}else{%>
+            <div class="imagen">
+              <img src="/img/camara3.jpg" />
+            </div>
+          <%}%>
+          <div class="card-texto">
+            <% moment.locale('es') %>
+            <% const fecha = `${reun.fecha} ${reun.hora}` %>
+            <p class="fecha"><%= moment(fecha).format('LLLL')  %></p>
+            <a href="/reun/<%= reun.slug %>">
+              <h3><%= reun.titulo %></h3>
+            </a>
+            <div class="info-autor">
+            <% if(reun.usuario.imagen){%>
+              <%const url = `./public/uploads/perfiles/${reun.usuario.imagen}`%>
+              <%if(comprobarUrl(url)){%>
+                  <div class="imagen">
+                      <img src="/uploads/perfiles/<%=reun.usuario.imagen%>" />
+                  </div>
+              <%}else{%>
+                  <div class="imagen">
+                      <img src="/img/perfil1.jpg" />
+                  </div>
+              <%}%>
+            <% }else{%>
+                <div class="imagen">
+                  <img src="/img/perfil1.jpg">
+                </div>
+            <% }%>          
+              <div class="informacion">
+                <p>Organizado por:</p>
+                <p class="autor">
+                  <a  href="/usuarios/<%= reun.usuario.id %>">
+                    <%= reun.usuario.nombre %>
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+    <% }) %>
+   <% }else{ %>
+    <p>No hay Reuniones Creadas</p>
+    <% } %>
+  </div>
+</div>
+
+<main class="bg-gris categorias">
+  <h2>Encuentra Grupos por Categoría</h2>
+
+  <div class="contenedor">
+    <ul class="listado-categorias grid columnas-2 columnas-md-3">
+      <%categorias.forEach(categoria =>{%>
+      <li>
+        <a href="/categoria/<%=categoria.slug %>">
+          <img src="/img/categoria_<%= categoria.id%>.jpg" />
+          <p><%= categoria.nombre%></p>
+        </a>
+      </li>
+      <%})%>
+    </ul>
+  </div>
+</main>
+

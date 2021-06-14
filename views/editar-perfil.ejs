@@ -1,0 +1,33 @@
+<main class="contenedor contenedor-formularios no-padding">
+    <h1><%- nombrePagina %></h1>
+
+    <form class="default-form" action="/editar-perfil" method="POST">
+        <div class="campo">
+            <label>Nombre</label>
+            <input maxlength="23"  placeholder="Nombre" type="text" name="nombre" value="<%= usuario.nombre%>">
+        </div>
+        <div class="campo descripcion">
+            <label>Quien soy</label>
+            <div class="contenedor-editor">
+                <input  type="hidden" id="x" name="descripcion"  value="<%= usuario.descripcion%>">
+                <trix-editor placeholder="Introduzca su información (No es obligatorio)" input="x"></trix-editor>
+            </div>
+        </div>
+       
+        <% if(usuario.cambioEmail === 0){ %>
+            <p>Su email actual es: <%= usuario.email%>, solo lo podrá cambiar una vez, elija sabiamente</p>
+            <div class="campo">
+                <label>E-mail</label>
+                <input type="email" name="email" placeholder="Email">
+            </div>
+            <%}else{%>
+                <div class="campo">
+                    <label>E-mail</label>
+                    <input type="email" name="email" placeholder="Email" value="<%= usuario.email%>" readonly>
+                </div>            
+        <%}%>
+        <div class="campo enviar">
+            <input type="submit" class="btn btn-rosa" value="Guardar Cambios">
+        </div>
+    </form>
+</main>

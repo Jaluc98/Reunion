@@ -1,0 +1,61 @@
+<main class="contenedor">
+    <h1><%= nombrePagina %></h1>
+    <div class="informacion-usuario">
+        <% if(usuario.imagen) { %>
+            <div class="imagen">
+                <%const url = `./public/uploads/perfiles/${usuario.imagen}`%>
+                <%if(comprobarUrl(url)){%>
+                    <div class="imagen">
+                        <img src="/uploads/perfiles/<%=usuario.imagen%>" />
+                    </div>
+                <%}else{%>
+                    <div class="imagen">
+                        <img src="/img/perfil1.jpg" />
+                    </div>
+                <%}%>
+                
+            </div> 
+        <% }else{ %>
+            <div class="imagen">
+                <img src="/img/perfil1.jpg">
+            </div> 
+        <% } %>
+        <% if(usuario.descripcion) { %>
+            <div class="texto"><%- usuario.descripcion %></div>
+        <% }else{ %>
+            <div class="texto">No tiene una descripcion establecida</div>
+        <% } %>
+    </div><!--info-usuario-->
+    <div class="grupos-usuario">
+        <% if(grupos.length > 0 ) {  %>
+            <h2>Grupos de: <%= usuario.nombre %></h2>
+            <ul class="lista-grupos">
+                <% grupos.forEach(grupo => { %> 
+                    <li>
+                        <div class="imagen">
+                            <% if(grupo.imagen) { %> 
+                                <%const url = `./public/uploads/grupos/${grupo.imagen}`%>
+                                <%if(comprobarUrl(url)){%>
+                                    <div class="imagen">
+                                        <img src="/uploads/grupos/<%=grupo.imagen%>" />
+                                    </div>
+                                <%}else{%>
+                                    <div class="imagen">
+                                        <img src="/img/camara3.jpg" />
+                                    </div>
+                                <%}%>
+                            <% } else { %>
+                                <img src="/img/camara3.jpg">
+                            <% } %>
+                        </div>
+                        <div class="texto">
+                            <a href="/grupos/<%= grupo.id %>">
+                                <h3><%= grupo.nombre %></h3>
+                            </a>
+                        </div>
+                    </li>
+                <% }) %>
+            </ul>
+        <% } %>
+    </div>
+</main>

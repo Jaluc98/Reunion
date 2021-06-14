@@ -1,0 +1,64 @@
+<div class="contenedor proximos-eventos">
+    <h1><%= nombrePagina %></h1>
+    <% if(reuniones.length > 0){ %>
+   
+    <div class="grid columnas-md-3 ">
+        <%reuniones.forEach(reunion =>{%>
+        <div class="card">
+            <%if(reunion.grupo.imagen){%>
+                <%const url = `./public/uploads/grupos/${reunion.grupo.imagen}`%>
+                <%if(comprobarUrl(url)){%>
+                    <div class="imagen">
+                        <img src="/uploads/grupos/<%=reunion.grupo.imagen%>" />
+                    </div>
+                <%}else{%>
+                    <div class="imagen">
+                        <img src="/img/camara3.jpg" />
+                    </div>
+                <%}%>
+            <%}else{%>
+                <img src="/img/camara3.jpg">
+            <%}%>
+          
+            <div class="card-texto">
+                <%moment.locale('es')%>
+                <% const fecha = reunion.fecha + ' ' + reunion.hora%>
+                <p class="fecha"><%= moment(fecha).format('LLLL')%> Horas </p>
+                <a href="/reun/<%= reunion.slug %>">
+                    <h3><%= reunion.titulo %> </h3>
+                </a>
+                <div class="info-autor">
+                        <% if(reunion.usuario.imagen){ %>
+                            <%const url = `./public/uploads/perfiles/${reunion.usuario.imagen}`%>
+                            <%if(comprobarUrl(url)){%>
+                                <div class="imagen">
+                                    <img src="/uploads/perfiles/<%=reunion.usuario.imagen%>" />
+                                </div>
+                            <%}else{%>
+                                <div class="imagen">
+                                    <img src="/img/perfil1.jpg" />
+                                </div>
+                            <%}%>
+                        <% }else{ %>
+                            <div class="imagen">
+                                <img src="/img/perfil1.jpg" />
+                            </div>
+                        <% } %>
+                    <div class="informacion">
+                        <p>Organizado por:</p>
+                        <p class="autor">
+                            <a  href="/usuarios/<%= reunion.usuario.id %>">
+                              <%= reunion.usuario.nombre %>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div><!--.Card-->
+        <%})%>
+    </div><!--Grid-->
+    <%}else{%>
+        <p>No hay Reuniones en esta categoria</p>
+    <%}%>
+</div>

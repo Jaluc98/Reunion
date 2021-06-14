@@ -1,0 +1,112 @@
+<main class="contenedor panel-administracion">
+    <h1><%= nombrePagina%></h1>
+    <div class="contenedor-botonesAd">
+        
+        <%if(grupos.length >= 2){%>
+            <a  title="Has alcanzado el maximo de 2 grupos, tienes <%=grupos.length%> grupos"  onclick="alert('Has alcanzado el maximo de 2 grupos, tienes <%=grupos.length%> grupos')"   href="" class="btn btn-gris">Nuevo grupo</a>
+        <%}else{%>
+            <a href="/nuevo-grupo" class="btn btn-amarillo">Nuevo grupo</a>
+        <%}%>
+        <%if(reunion.length >= 2){%>
+            <a  title="Has alcanzado el maximo de 3 reuniones, tienes <%=reunion.length%> Reuniones"  onclick="alert('Has alcanzado el maximo de 3 reuniones, tienes <%=reunion.length%> Reuniones')" href="" class="btn btn-gris">Nueva Reunion</a>
+        <%}else{%>
+            <a href="/nueva-reunion" class="btn btn-azul">Nueva Reunion</a>
+        <%}%>
+        <a href="/editar-perfil" class="btn btn-rosa">Editar Perfil</a>
+        <a href="/cambiar-password" class="btn btn-verde">Cambiar Password</a>
+        <a href="/imagen-perfil" class="btn btn-amarillo">Imagen Perfil</a>
+    </div>
+
+    <div class="seccion-admin">
+        <h2>Proximas Reuniones</h2>
+        <% if(reunion.length > 0){ %>
+        <ul>
+            <%reunion.forEach(reun =>{%>
+            <li>
+                <% moment.locale('es')%>
+                <%const fecha = reun.fecha+' '+reun.hora%>
+                <div class="informacion-admin">
+                    <p class="fecha"><%= moment(fecha).format('LLLL') %> </p>
+                    <a href="/reun/<%= reun.slug %>" target="_blank">
+                        <h3><%= reun.titulo %></h3>
+                    </a>
+                    <small><%= reun.interesados.length %> interesados</small>
+                </div>
+                <div class="acciones contenedor-botones">
+                   <a href="/editar-reunion/<%= reun.id %>" class="btn btn-verde">Editar</a>
+                   <a href="/asistentes/<%= reun.slug %>" class="btn btn-azul2">Asistentes</a>
+                   <a href="/eliminar-reunion/<%= reun.id %>" class="btn btn-rojo">Eliminar</a>
+                </div>
+            </li>
+            <% }) %> 
+        </ul>
+        <%}else{%>
+            <p>Aún no tienes Reuniones creadas</p>
+         <%}%>   
+    </div>
+
+    <div class="seccion-admin">
+        <h2>Tus Grupos</h2>
+        <%if(grupos.length){%>
+            <ul>
+                <%grupos.forEach(grupo =>{%>
+                  
+                    <li>
+                        <div class="informacion-admin">
+                            <a href="/grupos/<%= grupo.id %>"><h3><%= grupo.nombre %></h3></a>
+                        </div>
+                        <div class="acciones contenedor-botones">
+                        <a href="/editar-grupo/<%= grupo.id %>" class="btn btn-verde">Editar</a>
+                        <a href="/imagen-grupo/<%= grupo.id %>" class="btn btn-azul2">Imagen</a>
+                        <a href="/eliminar-grupo/<%= grupo.id %>" class="btn btn-rojo">Eliminar</a>
+                        </div>
+                    </li>
+                <%})%>
+            </ul>
+        <%}else{%>
+            <p>No tienes grupos Creados</p>
+        <%}%>    
+    </div>
+
+    <div class="seccion-admin">
+        <h2>Reuniones Anteriores</h2>
+        <% if(anteriores.length > 0){ %>
+        <ul>
+            <%anteriores.forEach(reun =>{%>
+            <li>
+                <% moment.locale('es')%>
+                <%const fecha = reun.fecha+' '+reun.hora%>
+                <div class="informacion-admin">
+                    <p class="fecha"><%= moment(fecha).format('LLLL') %> </p>
+                    <h3><%= reun.titulo %></h3>
+                    <small><%= reun.interesados.length %> interesados</small>
+                </div>
+                <div class="acciones contenedor-botones">
+                    <%if(reunion.length >= 3){%>
+                        <a  
+                        title="Has alcanzado el maximo de 3 reuniones, tienes <%=reunion.length%> Reuniones" 
+                        onclick="alert('Has alcanzado el maximo de 3 reuniones, tienes <%=reunion.length%> Reuniones')" 
+                        href="" 
+                        class="btn btn-gris">
+                        Editar</a>
+                        <a  
+                        title="Has alcanzado el maximo de 3 reuniones, tienes <%=reunion.length%> Reuniones" 
+                        onclick="alert('Has alcanzado el maximo de 3 reuniones, tienes <%=reunion.length%> Reuniones')" 
+                        href="" 
+                        class="btn btn-gris">Asistentes</a>
+                        <a href="/eliminar-reunion/<%= reun.id %>" class="btn btn-rojo">Eliminar</a>
+                    <%}else{%>
+                        <a href="/editar-reunion/<%= reun.id %>" class="btn btn-verde">Editar</a>
+                        <a href="/asistentes/<%= reun.slug %>" class="btn btn-azul2">Asistentes</a>
+                        <a href="/eliminar-reunion/<%= reun.id %>" class="btn btn-rojo">Eliminar</a>
+                    <%}%>
+                 
+                </div>
+            </li>
+            <% }) %> 
+        </ul>
+        <%}else{%>
+            <p>No hay Reuniones Anteriores</p>
+         <%}%>   
+    </div>
+</main>

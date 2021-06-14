@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reunion - <%- nombrePagina %></title>
+    <link
+      rel="stylesheet"
+      href="https://necolas.github.io/normalize.css/8.0.1/normalize.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700;900&family=Staatliches&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/trix.css" />
+    <link rel="stylesheet" href="/css/app.css" />
+  </head>
+
+  <body>
+    <header class="site-header contenedor">
+      <a href="/">
+        <img src="/img/logo.png" alt="Logo Reunion" />
+      </a>
+
+      <nav class="nav">
+        <% if(locals.usuario.id) { %>
+          <%- include ('partials/nav-autenticado.ejs') %> 
+        <% } else { %> 
+          <%- include ('partials/nav-no-autenticado.ejs') %>
+        <% } %>
+      </nav>
+    </header>
+
+    <%if(locals.mensajes){%> <% const categoria = Object.keys(locals.mensajes)
+    %> <% if(categoria.length){ %> 
+    <%locals.mensajes[categoria].forEach(alerta=> { %>
+    <div class="alertas">
+      <p class="alerta <%= categoria %>"><%= alerta %></p>
+    </div>
+    <%})%> <%}%> <%}%> <%- body %>
+
+    <footer class="site-footer contenedor">
+      <nav class="nav">
+        <% if(locals.usuario.id) { %>
+          <%- include ('partials/footer-autenticado.ejs') %> 
+        <% } else { %> 
+          <%- include ('partials/footer-no-autenticado.ejs') %>
+        <% } %>
+      </nav>
+      <p class="copyright">
+        Todos los derechos reservados Reunion <%- locals.year %> &copy;
+      </p>
+    </footer>
+    <script src="/js/trix.js"></script>
+    <%if(usuario.id){%>
+    <script src="/dist/bundle.js"></script>
+    <%}%>
+  </body>
+</html>

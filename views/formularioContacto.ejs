@@ -1,0 +1,24 @@
+<main class="contenedor contenedor-formularios">
+    <h1>
+        <%= nombrePagina%>
+    </h1>
+    <form action="/formularioContacto" method="POST" class="default-form">
+        <div class="campo">
+            <label>E-mail</label>
+            <input type="email" name="email" placeholder="Tu Email" />
+        </div>
+        <div class="campo">
+            <label>Asunto</label>
+            <input type="text" name="asunto" placeholder="Asunto" />
+        </div>
+        <div class="campo descripcion">
+            <label>Descripción</label>
+            <div class="contenedor-editor">
+                <textarea maxlength="500" style="resize: none;" name="descripcion" rows="10" cols="50"></textarea>
+            </div>
+        </div>
+        <div class="campo enviar">
+            <input type="submit" class="btn btn-rosa" name="confirmar" value="Enviar" />
+        </div>
+    </form>
+</main>

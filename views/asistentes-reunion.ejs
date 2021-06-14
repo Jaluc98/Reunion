@@ -1,0 +1,32 @@
+<!--Plantilla para los asistentes de la reunion-->
+<main class="contenedor asistentes">
+    <h1><%= nombrePagina%></h1>
+    <%if(asistentes.length > 0){%>
+        <ul class="listado-asistentes">
+            <% asistentes.forEach(asistente =>{%>
+                <li>
+                    <!--Comprobar su la imagen existe renderizar las opcines indicadas-->
+                    <%if(asistente.imagen){%>
+                        <%const url = `./public/uploads/perfiles/${asistente.imagen}`%>
+                            <%if(comprobarUrl(url)){%>
+                                <div class="imagen">
+                                    <img src="/uploads/perfiles/<%=asistente.imagen%>" />
+                                </div>
+                            <%}else{%>
+                                <div class="imagen">
+                                    <img src="/img/perfil1.jpg" />
+                                </div>
+                            <%}%>
+                    <%}else{%>
+                        <img src="/img/perfil1.jpg" />
+                    <%}%>
+                    <div class="texto">
+                        <%= asistente.nombre %>
+                    </div>
+                </li>
+            <%})%>
+        </ul>
+    <%}else{%>
+        <p class="no-asistentes">No hay asistentes</p>
+    <%}%>
+</main>

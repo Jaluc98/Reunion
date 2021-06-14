@@ -1,0 +1,61 @@
+<div class="contenedor">
+    <h1><%= nombrePagina %></h1>
+    <div class="informacion-grupo">
+        <div class="imagen">
+            <%if(grupo.imagen){%>
+                <%const url = `./public/uploads/grupos/${grupo.imagen}`%>
+                <%if(comprobarUrl(url)){%>
+                    <div class="imagen">
+                        <img src="/uploads/grupos/<%=grupo.imagen%>" />
+                    </div>
+                <%}else{%>
+                    <div class="imagen">
+                        <img src="/img/camara3.jpg" />
+                    </div>
+                <%}%>
+
+            <%}else{%>
+                <img src="/img/camara3.jpg" />
+            <%}%>
+        </div>
+        <div class="texto">
+            <%if(grupo.descripcion){%>
+                <%- grupo.descripcion%>
+            <%}else{%>
+                <div class="texto">>No tiene descipcion</div>
+            <%}%>
+          
+            <%if(grupo.url){%>
+                <a target="_blank" href="<%- grupo.url%>"> Visita nuestro sitio web </a>
+            <%}else{%>
+                <p><p>
+            <%}%>
+          
+            <% if(reuniones.length > 0 ) { %>
+                <h2>Próximas Reuniones</h2>
+                <ul class="lista-meetis">
+                    <% reuniones.forEach(reunion => { %>
+                        <li>
+                            <div class="texto">
+                                <a href="/reun/<%= reunion.slug %>">
+                                    <h3><%= reunion.titulo %></h3>
+                                    
+                                    <% moment.locale('es'); %>
+                                    <% const fecha = reunion.fecha + ' ' + reunion.hora; %>
+                                    <p class="fecha"><%= moment(fecha).format('LLLL') %> Horas</p>
+                                </a>
+                            </div>
+                        </li>
+                    <% }) %>
+                </ul>
+            <%}else{%>
+                <h2>Proximas Reuniones</h2>
+                <li>
+                    <div class="texto">
+                        <p>No hay reuniones en este grupo</p>
+                    </div>
+                </li>
+            <%}%>
+        </div>
+    </div>
+</div>

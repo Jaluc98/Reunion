@@ -1,0 +1,49 @@
+<main class="contenedor panel-administracion">
+    <h1>ADMINSTRADOR</h1>
+    <div class="seccion-admin">
+        <h2>Reuniones</h2>
+        <% if(reunion.length > 0){ %>
+        <ul>
+            <%reunion.forEach(reun =>{%>
+            <li>
+                <% moment.locale('es')%>
+                <%const fecha = reun.fecha+' '+reun.hora%>
+                <div class="informacion-admin">
+                    <p class="fecha"><%= moment(fecha).format('LLLL') %> </p>
+                    <a href="/reun/<%= reun.slug %>" target="_blank">
+                        <h3><%= reun.titulo %></h3>
+                    </a>
+                    <small><%= reun.interesados.length %> interesados</small>
+                </div>
+                <div class="acciones contenedor-botones">
+                   <a href="/eliminar-reunion/<%= reun.id %>" class="btn btn-rojo">Eliminar</a>
+                </div>
+            </li>
+            <% }) %> 
+        </ul>
+        <%}else{%>
+            <p>Aún no hay Reuniones creadas</p>
+         <%}%>   
+    </div>
+
+    <div class="seccion-admin">
+        <h2>Grupos</h2>
+        <%if(grupos.length){%>
+            <ul>
+                <%grupos.forEach(grupo =>{%>
+                  
+                    <li>
+                        <div class="informacion-admin">
+                            <a href="/grupos/<%= grupo.id %>"><h3><%= grupo.nombre %></h3></a>
+                        </div>
+                        <div class="acciones contenedor-botones">
+                        <a href="/eliminar-grupo/<%= grupo.id %>" class="btn btn-rojo">Eliminar</a>
+                        </div>
+                    </li>
+                <%})%>
+            </ul>
+        <%}else{%>
+            <p>No hay grupos Creados</p>
+        <%}%>    
+    </div>
+</main>
